@@ -10,7 +10,7 @@ Date: 2025-05-11
 """
 
 from typing import List, Tuple
-from ColumnDesign.geometry.wall_section import WallSection
+from WallColumnDesign.geometry.wall_section import WallSection
 
 
 def clip_polygon_above_c(

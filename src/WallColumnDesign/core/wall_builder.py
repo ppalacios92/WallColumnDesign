@@ -11,13 +11,13 @@ Date: 2025-05-11
 """
 
 import math
-from ColumnDesign.geometry.wall_section import WallSection
-from ColumnDesign.tools.plotting import plot_wall_section
-from ColumnDesign.tools.interaction_plotter import plot_interaction_diagram
-from ColumnDesign.materials.concrete import Concrete
-from ColumnDesign.materials.steel import Steel
-from ColumnDesign.analysis.interaction_diagram import compute_interaction_diagram
-from ColumnDesign.analysis.shear_capacity import compute_shear_capacity
+from WallColumnDesign.geometry.wall_section import WallSection
+from WallColumnDesign.tools.plotting import plot_wall_section
+from WallColumnDesign.tools.interaction_plotter import plot_interaction_diagram
+from WallColumnDesign.materials.concrete import Concrete
+from WallColumnDesign.materials.steel import Steel
+from WallColumnDesign.analysis.interaction_diagram import compute_interaction_diagram
+from WallColumnDesign.analysis.shear_capacity import compute_shear_capacity
 
 
 class WallBuilder:

@@ -20,10 +20,10 @@ Date: 2025-05-11
 
 import numpy as np
 from typing import List, Dict
-from ColumnDesign.geometry.wall_section import WallSection
-from ColumnDesign.geometry.geometry_utils import clip_polygon_above_c
-from ColumnDesign.materials.concrete import Concrete
-from ColumnDesign.materials.steel import Steel
+from WallColumnDesign.geometry.wall_section import WallSection
+from WallColumnDesign.geometry.geometry_utils import clip_polygon_above_c
+from WallColumnDesign.materials.concrete import Concrete
+from WallColumnDesign.materials.steel import Steel
 
 
 def compute_phi_E(epsilon_s: float) -> float:
