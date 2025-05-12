@@ -76,12 +76,14 @@ def compute_shear_capacity(
     Vn_max = 2.65 * math.sqrt(f_c) * (bw * 0.8*lw  ) 
 
     # Final design strength (reduced)
-    phiVn = phi * min(Vn, Vn_max)
+    phi_Vn = phi * Vn
+    phi_Vn_max= phi * Vn_max
 
     return {
         "Vc": Vc/1000,
         "Vs": Vs/1000,
         "Vn": Vn/1000,
         "Vn_max": Vn_max/1000,
-        "phiVn": phiVn/1000,
+        "phi_Vn": phi_Vn/1000,
+        "phi_Vn_max": phi_Vn_max/1000,
     }
