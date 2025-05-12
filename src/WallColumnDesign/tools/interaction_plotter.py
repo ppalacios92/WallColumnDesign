@@ -15,20 +15,17 @@ from typing import List
 
 def plot_interaction_diagram(results: List[dict]):
     """
-    Plots both nominal and reduced Pn-Mn interaction diagrams with notable points
-    and the compression limit line (RestPo).
+    Plots the nominal and reduced interaction diagrams with control points.
 
     Parameters
     ----------
     results : list of dict
-        List of results containing 'Pn', 'Mn', 'phi_Pn', 'phi_Mn', and optionally
-        'To', 'Po', 'Mb', 'Pb', and 'RestPo'.
+        List with 'Pn', 'Mn', 'phi_Pn', 'phi_Mn', and optionally control points.
     """
 
     if not results:
-        raise ValueError("No results to plot. Provide non-empty interaction results.")
+        raise ValueError("No results to plot.")
 
-    # --- Curvas principal y reducida ---
     P = [r["Pn"] for r in results]
     M = [r["Mn"] for r in results]
 
@@ -37,37 +34,25 @@ def plot_interaction_diagram(results: List[dict]):
 
     plt.figure(figsize=(8, 5))
 
-    # Curva nominal
-    plt.plot(M, P, linestyle='-', linewidth=1.8, label="Nominal (Pn - Mn)")
+    plt.plot(M, P, linestyle='-', linewidth=1.8, label="Nominal")
+    plt.plot(M_phi, P_phi, linestyle='--', color='red', linewidth=1.5, label="Reduced")
 
-    # Curva reducida
-    plt.plot(M_phi, P_phi, linestyle='--', color='red', linewidth=1.5, label="Reduced (ϕPn - ϕMn)")
-
-    # --- Puntos notables ---
     first = results[0]
     if all(key in first for key in ["To", "Po", "Mb", "Pb"]):
-
-        # To
         plt.plot(0, first["To"], 's', color='purple', markersize=6,
                  label=f"To: M=0.0, P={first['To']:.1f}")
-
-        # Po
         plt.plot(0, first["Po"], 's', color='purple', markersize=6,
                  label=f"Po: M=0.0, P={first['Po']:.1f}")
-
-        # Mb y Pb
         plt.plot(first["Mb"], first["Pb"], 's', color='purple', markersize=6,
                  label=f"Mb={first['Mb']:.1f}, Pb={first['Pb']:.1f}")
 
-    # --- Línea horizontal en RestPo (límite de compresión) ---
     if "RestPo" in first:
         rest_po = first["RestPo"]
         plt.axhline(y=rest_po, color='green', linestyle=':', linewidth=1.2,
-                    label=f"0.35*fc*Ag = {rest_po:.1f}")
+                    label=f"Limit = {rest_po:.1f}")
 
-    # --- Formato general ---
-    plt.xlabel("Moment M [Tonf·m]", fontsize=9, fontweight='bold')
-    plt.ylabel("Axial Force P [Tonf]", fontsize=9, fontweight='bold')
+    plt.xlabel("Moment M", fontsize=9, fontweight='bold')
+    plt.ylabel("Axial Force P", fontsize=9, fontweight='bold')
     plt.title("Axial-Moment Interaction Diagram", fontsize=10, fontweight='bold')
     plt.grid(True)
     plt.legend(fontsize=8, loc='center left', bbox_to_anchor=(1.02, 0.5))

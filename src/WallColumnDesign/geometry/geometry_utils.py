@@ -135,7 +135,7 @@ def compute_compression_block(section: WallSection, c_values: List[float]) -> Li
     """
     results = []
     y_top = section.L1
-    β = section.β  # Must be set externally
+    β = section.β 
 
     for c in c_values:
         a = β * c

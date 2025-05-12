@@ -16,21 +16,20 @@ from typing import Any
 
 def plot_wall_section(section: Any):
     """
-    Plots the wall geometry and reinforcement bars based on precomputed geometry.
+    Plots the wall geometry and reinforcement layout.
 
     Parameters
     ----------
     section : WallSection
-        A WallSection object with previously generated geometry and rebar positions.
+        WallSection object with generated geometry and reinforcement.
     """
 
     fig, ax = plt.subplots(figsize=(6, 10))
 
-    # Validate required polygons
     if not section.polygon_head_1 or not section.polygon_head_2 or not section.polygon_web:
-        raise ValueError("Wall geometry not generated. Call section.generate_geometry() first.")
+        raise ValueError("Wall geometry not defined. Call generate_geometry() first.")
 
-    # Draw head 1 (top) as filled gray zone
+    # Head 1 (top)
     ax.add_patch(
         Polygon(
             section.polygon_head_1,
@@ -41,7 +40,7 @@ def plot_wall_section(section: Any):
         )
     )
 
-    # Draw head 2 (bottom) as filled gray zone
+    # Head 2 (bottom)
     ax.add_patch(
         Polygon(
             section.polygon_head_2,
@@ -52,7 +51,7 @@ def plot_wall_section(section: Any):
         )
     )
 
-    # Draw web (alma) as outlined polygon
+    # Web
     ax.add_patch(
         Polygon(
             section.polygon_web,
@@ -63,35 +62,27 @@ def plot_wall_section(section: Any):
         )
     )
 
-    # Draw rebars for web
+    # Web rebars
     if section.rebars_main:
         xm, ym = zip(*section.rebars_main)
         ax.scatter(xm, ym, s=10, color='red', label='Web Rebars')
 
-    # Draw rebars for head 1
+    # Head 1 rebars
     if section.rebars_N1:
         x1, y1 = zip(*section.rebars_N1)
         ax.scatter(x1, y1, s=10, color='blue', label='Head 1 Rebars')
 
-    # Draw rebars for head 2
+    # Head 2 rebars
     if section.rebars_N2:
         x2, y2 = zip(*section.rebars_N2)
         ax.scatter(x2, y2, s=10, color='green', label='Head 2 Rebars')
 
-    # Axes and labels
     ax.set_aspect('equal')
-    ax.set_xlabel('Thickness X [mm]', fontsize=9, fontweight='bold')
-    ax.set_ylabel('Height Y [mm]', fontsize=9, fontweight='bold')
-    ax.set_title('Reinforced Concrete Wall Section', fontsize=10, fontweight='bold')
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_title('Wall Section')
     ax.grid(True)
 
-    # Place legend outside to the right
-    ax.legend(
-        loc='center left',
-        bbox_to_anchor=(1.02, 0.5),
-        borderaxespad=0.5,
-        fontsize=8
-    )
-
+    ax.legend(loc='center left', bbox_to_anchor=(1.02, 0.5), fontsize=8)
     plt.tight_layout()
     plt.show()

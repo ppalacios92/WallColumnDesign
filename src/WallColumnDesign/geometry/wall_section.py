@@ -101,7 +101,7 @@ class WallSection:
         offset_head1 = (T_max - self.W1) / 2
         offset_head2 = (T_max - self.W2) / 2
 
-        # Bottom head (head 2)
+        # Bottom head 2
         self.polygon_head_2 = [
             (offset_head2, 0),
             (offset_head2 + self.W2, 0),
@@ -109,7 +109,7 @@ class WallSection:
             (offset_head2, self.N2)
         ]
 
-        # Top head (head 1)
+        # Top head 1
         self.polygon_head_1 = [
             (offset_head1, self.L1 - self.N1),
             (offset_head1 + self.W1, self.L1 - self.N1),
@@ -117,7 +117,7 @@ class WallSection:
             (offset_head1, self.L1)
         ]
 
-        # Web (alma)
+        # Web 
         self.polygon_web = [
             (offset_web, self.N2),
             (offset_web + self.thickness, self.N2),

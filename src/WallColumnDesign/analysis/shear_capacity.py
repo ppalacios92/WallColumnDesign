@@ -66,13 +66,13 @@ def compute_shear_capacity(
         alpha_c = 0.53
 
 
-    # Shear strength from ACI 18.10.4.1 (second column)
+    # Shear strength 
     Vc = Acv * (0.27 * alpha_c * lambda_c * math.sqrt(f_c))
 
     Vs = Acv * ( rho_t * fy) 
 
     Vn=Vc+Vs
-    # Upper bound from ACI 18.10.4.4 (second column)
+    
     Vn_max = 2.65 * math.sqrt(f_c) * (bw * 0.8*lw  ) 
 
     # Final design strength (reduced)

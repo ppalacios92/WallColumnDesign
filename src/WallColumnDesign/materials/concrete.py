@@ -42,11 +42,11 @@ class Concrete:
         fc = self.fc
 
         # Normative thresholds and parameters (based on reference table)
-        fc_lower_limit = 17.0*10     # MPa
-        fc_upper_limit = 28.0*10     # MPa
+        fc_lower_limit = 17.0*10     
+        fc_upper_limit = 28.0*10     
         β_initial = 0.85
         β_reduction = 0.05
-        fc_step = 7.0*10             # MPa
+        fc_step = 7.0*10             
         β_min = 0.65
 
         if fc_lower_limit <= fc <= fc_upper_limit:

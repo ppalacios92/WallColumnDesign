@@ -22,27 +22,26 @@ from WallColumnDesign.analysis.shear_capacity import compute_shear_capacity
 
 class WallBuilder:
     """
-    Wrapper class that builds a reinforced concrete wall section using
-    external material definitions and reinforcement configuration.
+    Builds a reinforced concrete wall section and computes interaction and shear capacity.
 
     Attributes
     ----------
     section : WallSection
-        The constructed wall section instance.
+        Wall geometry and reinforcement.
     concrete : Concrete
-        Concrete material object (stored externally).
+        Concrete material properties.
     steel : Steel
-        Steel material object (stored externally).
+        Steel material properties.
     results : list of dict
-        Precomputed interaction diagram results.
+        Interaction diagram results.
     To, Po, Mb, Pb : float
         Notable points from the interaction diagram.
     Ag : float
-        Gross concrete area [mm²].
+        Gross section area.
     rho_main, rho_head1, rho_head2 : float
-        Vertical reinforcement ratio in each region.
+        Vertical reinforcement ratios.
     Vn : float
-        Shear capacity of the wall section [kgf].
+        Shear strength.
     """
 
     def __init__(
@@ -63,11 +62,9 @@ class WallBuilder:
     ):
         self.concrete = concrete
         self.steel = steel
-        self.rho_web=rho_web
-        self.hw=hw
+        self.rho_web = rho_web
+        self.hw = hw
 
-
-        # --- Geometry and reinforcement setup ---
         self.section = WallSection(
             L1=L1,
             thickness=thickness,
@@ -81,12 +78,9 @@ class WallBuilder:
         self.section.diam_head2 = diam_head2
         self.section.generate_geometry()
         self.section.generate_rebars()
-        
 
-        # --- Gross area [cm²] ---
         self.Ag = W1 * N1 + W2 * N2 + (L1 - N1 - N2) * thickness
 
-        # --- Vertical reinforcement ratios ---
         As_main_total = len(self.section.rebars_main) * math.pi * (diam_main / 2)**2
         As_head1_total = len(self.section.rebars_N1) * math.pi * (diam_head1 / 2)**2
         As_head2_total = len(self.section.rebars_N2) * math.pi * (diam_head2 / 2)**2
@@ -95,7 +89,6 @@ class WallBuilder:
         self.rho_head1 = As_head1_total / (W1 * L1)
         self.rho_head2 = As_head2_total / (W2 * L1)
 
-        # --- Interaction diagram ---
         self.results = compute_interaction_diagram(
             section=self.section,
             concrete=self.concrete,
@@ -113,26 +106,25 @@ class WallBuilder:
         self.Pb = next((r["Pb"] for r in self.results if "Pb" in r), None)
         self.RestPo = next((r["RestPo"] for r in self.results if "RestPo" in r), None)
 
-        # --- Shear capacity Vn [kgf] ---
         self.results_Vn = compute_shear_capacity(
             f_c=self.concrete.fc,
-            fy=self.steel.fy,            
+            fy=self.steel.fy,
             bw=thickness,
             lw=L1,
             hw=self.hw,
-            rho_t=self.rho_web,          
+            rho_t=self.rho_web,
             lambda_c=1.0,
             phi=0.60
         )
 
     def build(self, plot: bool = True):
         """
-        Optionally plots the wall section and its interaction diagram.
+        Plots wall geometry and interaction diagram.
 
         Parameters
         ----------
         plot : bool
-            If True, both the wall section and interaction diagram are plotted.
+            Whether to plot the section and diagram.
         """
         if plot:
             plot_wall_section(self.section)
