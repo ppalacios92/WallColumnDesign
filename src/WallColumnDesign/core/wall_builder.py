@@ -104,7 +104,8 @@ class WallBuilder:
         self.Po = next((r["Po"] for r in self.results if "Po" in r), None)
         self.Mb = next((r["Mb"] for r in self.results if "Mb" in r), None)
         self.Pb = next((r["Pb"] for r in self.results if "Pb" in r), None)
-        self.RestPo = next((r["RestPo"] for r in self.results if "RestPo" in r), None)
+        self.RestPo_0_35 = next((r["RestPo_0_35"] for r in self.results if "RestPo_0_35" in r), None)
+        self.RestPo_0_10 = next((r["RestPo_0_10"] for r in self.results if "RestPo_0_10" in r), None)
 
         self.results_Vn = compute_shear_capacity(
             f_c=self.concrete.fc,

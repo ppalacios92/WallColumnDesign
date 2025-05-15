@@ -149,7 +149,9 @@ def compute_interaction_diagram(
         Mn = Mc + Ms
         ϕ = compute_phi_E(ε_s_max)
 
-        RestPo = 0.35 * fc * Ac / 1000 
+        RestPo_0_35 = 0.35 * fc * Ac / 1000 
+        RestPo_0_10 = 0.10 * fc * Ac / 1000 
+
 
         # Save control points
         if c <= 0.01:
@@ -178,7 +180,8 @@ def compute_interaction_diagram(
         results[0]["Po"] = Po
         results[0]["Mb"] = Mb
         results[0]["Pb"] = Pb
-        results[0]["RestPo"] = RestPo
+        results[0]["RestPo_0_35"] = RestPo_0_35
+        results[0]["RestPo_0_10"] = RestPo_0_10
 
         # Calcular Rec_C2 (restricción máxima de capacidad a compresión)
         Rec_C2 = 0.80 * 0.65 * Po  # Tonf

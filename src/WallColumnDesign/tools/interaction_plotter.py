@@ -46,10 +46,13 @@ def plot_interaction_diagram(results: List[dict]):
         plt.plot(first["Mb"], first["Pb"], 's', color='purple', markersize=6,
                  label=f"Mb={first['Mb']:.1f}, Pb={first['Pb']:.1f}")
 
-    if "RestPo" in first:
-        rest_po = first["RestPo"]
-        plt.axhline(y=rest_po, color='green', linestyle=':', linewidth=1.2,
-                    label=f"Limit = {rest_po:.1f}")
+    if "RestPo_0_35" in first:
+        RestPo_0_35 = first["RestPo_0_35"]
+        RestPo_0_10 = first["RestPo_0_10"]
+        plt.axhline(y=RestPo_0_35, color='green', linestyle=':', linewidth=1.2,
+                    label=f"Limit 0.35*fc*Ag= {RestPo_0_35:.1f}")
+        plt.axhline(y=RestPo_0_10, color='green', linestyle=':', linewidth=1.2,
+                    label=f"Limit 0.10*fc*Ag= {RestPo_0_10:.1f}")
 
     plt.xlabel("Moment M", fontsize=9, fontweight='bold')
     plt.ylabel("Axial Force P", fontsize=9, fontweight='bold')
